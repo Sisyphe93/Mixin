@@ -14,6 +14,11 @@ BIN_DIR := bin
 # Compiler and compiler flags
 CXX := g++
 CXXFLAGS := -std=c++11 -Wall -Iincludes `sdl2-config --cflags`
+VALGRINDFLAGS := --leak-check=full \
+				--show-leak-kinds=all \
+				--track-origins=yes\
+				--verbose\
+				--log-file=valgrind-out.txt
 LDFLAGS := `sdl2-config --libs`
 
 # Source files
@@ -39,6 +44,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo "$(GREEN)Compiling:$(NC) $<"
 	$(CXX) $(CXXFLAGS) -c $< -o $@ || { echo "$(RED)Compilation failed:$(NC) $?"; exit 1; }
 	@echo "$(GREEN)Compilation complete:$(NC) $@"
+
+test-leak: 
+	@valgrind $(VALGRINDFLAGS) $(EXEC)
 
 clean:
 clean:
