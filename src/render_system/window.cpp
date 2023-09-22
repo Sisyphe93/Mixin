@@ -17,18 +17,18 @@ void cleanup(int status, void *data)
     SDL_Quit();
 }
 
-void prepareScene(Window app)
+void prepareScene(Window *app)
 {
-    SDL_SetRenderDrawColor(app.renderer, 90, 128, 255, 255);
-    SDL_RenderClear(app.renderer);
+    SDL_SetRenderDrawColor(app->renderer, 90, 128, 255, 255);
+    SDL_RenderClear(app->renderer);
 }
 
-void presentScene(Window app)
+void presentScene(Window *app)
 {
-    SDL_RenderPresent(app.renderer);
+    SDL_RenderPresent(app->renderer);
 }
 
-void initSDL(Window app)
+void initSDL(Window *app)
 {
     int renderFlags, windowFlags;
 
@@ -41,17 +41,17 @@ void initSDL(Window app)
         exit(1);
     }
 
-    app.window = SDL_CreateWindow("First Window", SDL_WINDOW_RESIZABLE,
-                                  SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
-    if (!app.window)
+    app->window = SDL_CreateWindow("First Window", SDL_WINDOWPOS_UNDEFINED,
+                                   SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
+    if (!app->window)
     {
         cout << "Failed to Open Window" << SDL_GetError() << endl;
         exit(1);
     }
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-    app.renderer = SDL_CreateRenderer(app.window, -1, renderFlags);
-    if (!app.renderer)
+    app->renderer = SDL_CreateRenderer(app->window, -1, renderFlags);
+    if (!app->renderer)
     {
         cout << "Failed to Create a renderer" << SDL_GetError() << endl;
         exit(1);
@@ -62,13 +62,13 @@ int window()
 {
     Window window;
     memset(&window, 0, sizeof(Window));
-    initSDL(window);
+    initSDL(&window);
     on_exit(cleanup, &window);
     while (1)
     {
-        prepareScene(window);
+        prepareScene(&window);
         inputs();
-        presentScene(window);
+        presentScene(&window);
     }
     return 0;
 }
