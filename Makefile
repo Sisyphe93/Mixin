@@ -13,7 +13,8 @@ BIN_DIR := bin
 
 # Compiler and compiler flags
 CXX := g++
-CXXFLAGS := -std=c++11 -Wall -Iincludes
+CXXFLAGS := -std=c++11 -Wall -Iincludes `sdl2-config --cflags`
+LDFLAGS := `sdl2-config --libs`
 
 # Source files
 SRCS := $(shell find $(SRC_DIR) -type f -name '*.cpp')
@@ -30,7 +31,7 @@ all: $(EXEC)
 $(EXEC): $(OBJS)
 	@mkdir -p $(BIN_DIR)
 	@echo "$(GREEN)Linking executable:$(NC) $@"
-	$(CXX) $^ -o $@
+	$(CXX) $^ -o $@ $(LDFLAGS)
 	@echo "$(GREEN)Build complete!$(NC)"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
