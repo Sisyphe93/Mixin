@@ -1,21 +1,56 @@
-CC := g++
+# Color codes
+RED := \033[0;31m
+GREEN := \033[0;32m
+NC := \033[0m  # No Color
 
-TARGET_EXEC := mixin
+# Hide all commands
+.SILENT:
 
-BUILD_DIR := ./build
-SRC_DIRS := ./src
-SRC_DIRS := ./includes
+# Directories
+SRC_DIR := src
+BUILD_DIR := build
+BIN_DIR := bin
 
-CFLAGS := -Wall -Werror -v
+# Compiler and compiler flags
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall -Iincludes
 
-OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+# Source files
+SRCS := $(shell find $(SRC_DIR) -type f -name '*.cpp')
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
-SRCS := $(shell find $(SRC_DIRS) -name '*.cpp')
-INCLDS := $(shell find $(SRC_DIRS) -name '*.hpp')
+# Executable name
+EXEC := $(BIN_DIR)/Mixin
 
-all: $(OBJDIRECTORY)
-	$(CC) -c $(SRCS) -o $(TARGET_EXEC)
+# Targets
+.PHONY: all clean
+
+all: $(EXEC)
+
+$(EXEC): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	@echo "$(GREEN)Linking executable:$(NC) $@"
+	$(CXX) $^ -o $@
+	@echo "$(GREEN)Build complete!$(NC)"
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	@echo "$(GREEN)Compiling:$(NC) $<"
+	$(CXX) $(CXXFLAGS) -c $< -o $@ || { echo "$(RED)Compilation failed:$(NC) $?"; exit 1; }
+	@echo "$(GREEN)Compilation complete:$(NC) $@"
 
 clean:
+clean:
+	@echo "$(RED)Cleaning up:$(NC) $(BUILD_DIR) $(BIN_DIR)"
+	@for file in $(BUILD_DIR)/* $(BIN_DIR)/*; do \
+		if [ -f "$$file" ]; then \
+			echo "$(RED)Removed:$(NC) $$file"; \
+			rm -f "$$file"; \
+		fi \
+	done
+	echo "$(RED)Removed:$(NC) $(BUILD_DIR)";
 	rm -rf $(BUILD_DIR)
-	rm -f $(TARGET_EXEC)
+	echo "$(RED)Removed:$(NC) $(BIN_DIR)";
+	rm -rf $(BIN_DIR)
+	@echo "$(GREEN)Cleaned up!$(NC)"
+
