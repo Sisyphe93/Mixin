@@ -61,9 +61,14 @@ void initSDL(Window *app)
 int window()
 {
     Window window;
+    Entity player("player", Vector2(100.0f, 100.0f), 45.0f, Vector2(1.0f, 1.0f));
+    Vector2 pos;
+
+    pos = player.GetPosition();
     memset(&window, 0, sizeof(Window));
     initSDL(&window);
     on_exit(cleanup, &window);
+    cout << pos.x << ' ' << pos.y << endl;
     while (1)
     {
         prepareScene(&window);
