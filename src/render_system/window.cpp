@@ -19,7 +19,7 @@ void cleanup(int status, void *data)
 
 void prepareScene(Window app)
 {
-    SDL_SetRenderDrawColor(app.renderer, 96, 128, 255, 255);
+    SDL_SetRenderDrawColor(app.renderer, 90, 128, 255, 255);
     SDL_RenderClear(app.renderer);
 }
 
