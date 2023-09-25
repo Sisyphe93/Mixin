@@ -58,6 +58,10 @@ public:
 	{
 		return transform.position;
 	}
+	const Vector2 &GetScale() const
+	{
+		return transform.scale;
+	}
 };
 
 #endif

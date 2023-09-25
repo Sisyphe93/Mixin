@@ -54,7 +54,7 @@ void initSDL(Window *app)
 int window()
 {
     Window window;
-    Entity player("player", Vector2(100.0f, 100.0f), 45.0f, Vector2(1.0f, 1.0f));
+    Entity player("player", Vector2(0.0f, 0.0f), 45.0f, Vector2(2.0f, 2.0f));
     Vector2 pos;
     const char *filename = "assets/character.jpeg";
 
