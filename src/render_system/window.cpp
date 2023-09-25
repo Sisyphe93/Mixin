@@ -4,15 +4,8 @@ void cleanup(int status, void *data)
 {
     Window *app = (Window *)data;
 
-    if (app->window != NULL)
-    {
-        SDL_DestroyWindow(app->window);
-    }
-
-    if (app->renderer != NULL)
-    {
-        SDL_DestroyRenderer(app->renderer);
-    }
+    SDL_DestroyWindow(app->window);
+    SDL_DestroyRenderer(app->renderer);
     SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO);
     SDL_Quit();
 }
@@ -63,16 +56,17 @@ int window()
     Window window;
     Entity player("player", Vector2(100.0f, 100.0f), 45.0f, Vector2(1.0f, 1.0f));
     Vector2 pos;
+    const char *filename = "assets/character.jpeg";
 
-    pos = player.GetPosition();
     memset(&window, 0, sizeof(Window));
     initSDL(&window);
+    player.texture = loadTexture(filename, &window);
     on_exit(cleanup, &window);
-    cout << pos.x << ' ' << pos.y << endl;
     while (1)
     {
         prepareScene(&window);
         inputs();
+        blit(&window, player.texture, player);
         presentScene(&window);
     }
     return 0;

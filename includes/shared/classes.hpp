@@ -2,6 +2,8 @@
 #define CLASSESS_HPP
 
 #include <SDL2/SDL.h>
+#include <SDL_image.h>
+#include <fstream>
 #include "iostream"
 using namespace std;
 

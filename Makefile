@@ -13,13 +13,15 @@ BIN_DIR := bin
 
 # Compiler and compiler flags
 CXX := g++
-CXXFLAGS := -std=c++11 -Wall -Iincludes `sdl2-config --cflags`
+CXXFLAGS := -g -std=c++11 -Wall -Iincludes `sdl2-config --cflags`
 VALGRINDFLAGS := --leak-check=full \
 				--show-leak-kinds=all \
 				--track-origins=yes\
 				--verbose\
 				--log-file=valgrind-out.txt
-LDFLAGS := `sdl2-config --libs`
+SDL2_LIBS := `sdl2-config --libs`
+SDL2_IMAGE_LIBS := `sdl2-config --libs` `pkg-config SDL2_image --libs`
+LDFLAGS := $(SDL2_LIBS) $(SDL2_IMAGE_LIBS)
 
 # Source files
 SRCS := $(shell find $(SRC_DIR) -type f -name '*.cpp')
