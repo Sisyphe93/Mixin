@@ -54,7 +54,7 @@ void initSDL(Window *app)
 int window()
 {
     Window window;
-    Entity player("player", Vector2(0.0f, 0.0f), 45.0f, Vector2(2.0f, 2.0f));
+    Entity player("Mixin", Vector2(0.0f, 0.0f), 45.0f, Vector2(2.0f, 2.0f));
     Vector2 pos;
     const char *filename = "assets/character.jpeg";
 
@@ -65,7 +65,7 @@ int window()
     while (1)
     {
         prepareScene(&window);
-        inputs();
+        inputs(&player);
         blit(&window, player.texture, player);
         presentScene(&window);
     }

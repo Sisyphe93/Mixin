@@ -26,6 +26,7 @@ LDFLAGS := $(SDL2_LIBS) $(SDL2_IMAGE_LIBS)
 # Source files
 SRCS := $(shell find $(SRC_DIR) -type f -name '*.cpp')
 OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
+CLS := $(shell clear)
 
 # Executable name
 EXEC := $(BIN_DIR)/Mixin

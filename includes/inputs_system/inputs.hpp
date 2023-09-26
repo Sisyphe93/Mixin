@@ -3,5 +3,5 @@
 
 #include "../shared/classes.hpp"
 
-void inputs(void);
+void inputs(Entity *player);
 #endif

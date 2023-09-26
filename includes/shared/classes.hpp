@@ -40,6 +40,9 @@ public:
 	const Vector2 &getPosition() const { return position; }
 	float getRotation() const { return rotation; }
 	const Vector2 &getScale() const { return scale; }
+	void setPosition(const Vector2 &newPosition) { position = newPosition; }
+	void setRotation(float newRotation) { rotation = newRotation; }
+	void setScale(const Vector2 &newScale) { scale = newScale; }
 };
 
 // Define the Entity class for 2D objects
@@ -61,6 +64,11 @@ public:
 	const Vector2 &GetScale() const
 	{
 		return transform.scale;
+	}
+
+	void setPosition(const Vector2 &newPosition)
+	{
+		transform.position = newPosition;
 	}
 };
 
